@@ -1,6 +1,6 @@
 // Wait for the DOM to fully load before running the script
 document.addEventListener('DOMContentLoaded', function() {
-    loadTasks(); // Load tasks from Local Storage on page load
+    console.log('DOM fully loaded and parsed.'); // Debugging log
 
     // Get references to DOM elements
     const addButton = document.getElementById('add-task-btn');
@@ -24,6 +24,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // Function to load tasks from Local Storage
     function loadTasks() {
         const storedTasks = JSON.parse(localStorage.getItem('tasks') || '[]'); // Get tasks from Local Storage
+        console.log('Loaded tasks from Local Storage:', storedTasks); // Debugging log
         storedTasks.forEach(task => addTask(task.task, false)); // Add each task to the list
     }
 
@@ -59,6 +60,7 @@ document.addEventListener('DOMContentLoaded', function() {
             const newTask = { id: storedTasks.length + 1, task: taskTextTrimmed, completed: false }; // Create a new task object
             storedTasks.push(newTask); // Add the new task to the array
             localStorage.setItem('tasks', JSON.stringify(storedTasks)); // Save updated tasks back to Local Storage
+            console.log('Saved tasks to Local Storage:', storedTasks); // Debugging log
         }
 
         taskInput.value = ''; // Clear the input field after adding the task
@@ -82,5 +84,8 @@ document.addEventListener('DOMContentLoaded', function() {
         // Filter out the task to remove it
         storedTasks = storedTasks.filter(task => task.task !== taskText); 
         localStorage.setItem('tasks', JSON.stringify(storedTasks)); // Update Local Storage with the new array
+        console.log('Updated tasks after removal:', storedTasks); // Debugging log
     }
+
+    loadTasks(); // Load tasks after all functions are defined
 });
